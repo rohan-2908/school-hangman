@@ -2,14 +2,14 @@ import os,sys
 from time import sleep
 from sys import exit
 
-intro=r"""
+intro="""
                        _   _    _    _   _  ____ __  __    _    _   _
-                      | | | |  / \  | \ | |/ ___|  \/  |  / \  | \ | |
-                      | |_| | / _ \ |  \| | |  _| |\/| | / _ \ |  \| |
-                      |  _  |/ ___ \| |\  | |_| | |  | |/ ___ \| |\  |
-                      |_| |_/_/   \_|_| \_|\____|_|  |_/_/   \_|_| \_|
+                      | | | |  / \\  | \ | |/ ___|  \\/  |  / \\  | \\ | |
+                      | |_| | / _ \\ |  \| | |  _| |\\/| | / _ \\ |  \\| |
+                      |  _  |/ ___ \\| |\\  | |_| | |  | |/ ___ \\| |\\  |
+                      |_| |_/_/   \\_|_| \\_|\\____|_|  |_/_/   \\_|_| \\_|
 
-                        ----------Created By 12345678912----------
+                        ----------Created By SAPS - XII A----------
 \n\n\t\t\t\t  ↲ Press ENTER to start"""
 
 lore="In the late 1900s, a secluded village was haunted by a sinister figure known by the villagers as the Hangman.\nThe legend told of a dark,cursed parchment that appeared in the hands of those who crossed the Hangman’s path.\nThe parchment bore a hidden word that must be guessed to escape.\n\nFor each incorrect guess, a spectral figure of the Hangman would draw closer to completion—a noose tightening\naround a ghostly neck. The cursed villagers who failed to guess the word were seized by the Hangman, their\nsouls trapped within the parchment’s dark embrace.\n\nThough the Hangman disappeared centuries ago, whispers of his curse persist. Those who find the cursed \nparchment or hear the chilling challenge are said to risk becoming the Hangman’s next victims, forever bound to\nthe terror of his eternal game.\n\n**ADAPTED"
