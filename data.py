@@ -22,8 +22,10 @@ def connect():				#Initializes on each execution
 
 def DataAdder(PData,old_user=None):				#Adds data to database
 	connect()
-	if old_user==None: query='INSERT INTO players VALUES("{}","{}","{}","{}",{})'.format(PData['name'],PData['userid'],PData['passwd'],PData['words'],PData['g.num'])
-	else: query='UPDATE players SET name="{}", userid="{}", passwd="{}", wrds_guessed="{}", num_guessed={} WHERE userid="{}"'.format(PData['name'],PData['userid'],PData['passwd'],PData['words'],PData['g.num'],old_user)
+	if old_user==None:
+		query='INSERT INTO players VALUES("{}","{}","{}","{}",{})'.format(PData['name'],PData['userid'],PData['passwd'],PData['words'],PData['g.num'])
+	else:
+		query='UPDATE players SET name="{}", userid="{}", passwd="{}", wrds_guessed="{}", num_guessed={} WHERE userid="{}"'.format(PData['name'],PData['userid'],PData['passwd'],PData['words'],PData['g.num'],old_user)
 	connect.csr.execute(query)
 	connect.con.commit()
 	connect.con.close()

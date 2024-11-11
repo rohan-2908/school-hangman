@@ -8,7 +8,6 @@ def LoadGame():					#Loads the main game after login is successfull
 	man()
 	TPlayer=deepcopy(sides.Player)
 	wprog=TPlayer['words']
-	nprog=TPlayer['g.num']
 	while True:
 		choice=input(efx.Printer("Choose Difficulty level\n\n"+efx.diffics+"\n\t  [1] CURSED\t\t\t     [2] GHOST\t\t\t         [3] PHANTOM\n\nCHOICE: ",delay=0.0005)); choice.lower()
 
@@ -41,9 +40,8 @@ def LoadGame():					#Loads the main game after login is successfull
 		efx.Printer(f"Word guessed! It was {word.upper()}!\n\n",clear=False,pdelay=1)
 		efx.Printer("Whew.. You managed to escape!",clear=False,pdelay=3.5)
 
-		wprog[code].append(word)
-		nprog+=1
-		data.DataAdder(TPlayer,old_user='exists')
+		wprog[code].append(word); TPlayer['g.num']+=1
+		data.DataAdder(TPlayer,old_user=TPlayer['userid'])
 		(sides.Player).update(TPlayer)
 	else:
 		efx.Printer(man.hangman_display,delay=0.0005)
