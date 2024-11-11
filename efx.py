@@ -55,9 +55,7 @@ help="""
 \t\t\t    |  ||   |   |
 \t\t\t    |  ||__ |__.|
 
-\t\t     WELCOME TO HANGMAN-REMASTERED!
-      A classic word guessing game, remastered with the best gameplay!
-\t Originally published at https://github.com/a-good-omen/.
+\t\t\t   WELCOME TO HANGMAN!
 
 ──────────────────────────────────────────────────────────────────────────
 
@@ -103,6 +101,7 @@ help="""
    in the menu.
 
    LEADERBOARD ranks the top 5 players based on the number of words guessed.
+   If tied, players are ranked alphabatically.
 
    NOTE: The leaderboard WORKS ONLY IF more than 1 player is using the same
    device and the players have guessed atleast 1 word.
@@ -142,7 +141,8 @@ def Exit():				#Custom exit function
 		choice=input(Printer("Are you sure you want to exit?(Y/N) "))
 
 		if choice in 'yY':
-			Printer("Exiting..."); ClearScreen()
+			Printer("Exiting...")
+			ClearScreen()
 			exit()
 
 		elif choice in 'nN':

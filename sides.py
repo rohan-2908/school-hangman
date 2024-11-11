@@ -81,7 +81,7 @@ def ExistingLogin():				#Deals with login for existing players
 
 		if data.UserVeri(userid)=='user exists':
 			efx.Printer("Checking password....")
-			if data.Verifier(userid,passwd)!='verified':
+			if data.Verifier(passwd)!='verified':
 				efx.Printer("Password is incorrect! Try again!",pdelay=1)
 				continue
 			else:
@@ -94,7 +94,7 @@ def ExistingLogin():				#Deals with login for existing players
 			while True:
 				choice=input(efx.Printer(
 f"""Since **{userid}** couldn't be found in the database, try one of these\n
-\t[1] Create an account\n\n\t[2] Try Again\n\n\t[3] Exit\n\nCHOICE: """))
+\t[1] Create an account\n\n\t[2] Try Again\n\n\t[3] Exit\n\nCHOICE: """,delay=0.0001))
 
 				if choice in ('1','create an account'):
 					CreateAccount()
@@ -130,7 +130,8 @@ CHOICE: """
 			text=''
 
 		elif choice in ('edit profile','edp'):
-			TPlayer=Player.copy(); txt="What would you like to change?"
+			TPlayer=Player.copy()
+			txt="What would you like to change?"
 
 			while True:
 				choice=input(efx.Printer(f'{txt}\n\n[1] Name\t\t[2] Username\t\t[3] Password\t\t[4] Nothing\n\nCHOICE: ',delay=0.005)).lower().strip()
@@ -144,7 +145,7 @@ CHOICE: """
 				elif choice in ('2','username'):
 					while True:
 						userid=input(efx.Printer('\nNew Username: '))
-						if Player['userid']==userid or userid=='': efx.Printer('Change to NEW display name!'); continue
+						if Player['userid']==userid or userid=='': efx.Printer('Change to NEW display name!',pdelay=0.5); continue
 
 						if data.UserVeri(userid)!='user exists': TPlayer['userid']=userid; break
 						else: efx.Printer('A user with the username already exists!',pdelay=0.5)
@@ -165,12 +166,13 @@ CHOICE: """
 				data.DataAdder(TPlayer,Player['userid'])
 				Player.update(TPlayer)
 
-			passwd="*"*len(Player['passwd']);text='[sp] See Password\t'
+			passwd="*"*len(Player['passwd'])
+			text='[sp] See Password\t'
 
 		elif choice in ('check progress','cp'):
 			prog=Player['words']
-			efx.Printer(efx.diffics+f"\n\t     {len(prog[0])}/50\t\t\t\t{len(prog[1])}/50\t\t\t\t    {len(prog[2])}/50\n\t      {len(prog[0])*2}%\t\t\t\t {len(prog[1])*2}%\t\t\t\t     {len(prog[2])*2}%",delay=0.0004)
-			input(efx.Printer('\n\n\n\n\n\n↲ Press ENTER to continue',clear=False,delay=0.005))
+			efx.Printer(efx.diffics+f"\n\t     {len(prog[0])}/50\t\t\t\t{len(prog[1])}/50\t\t\t\t    {len(prog[2])}/50\n\t      {len(prog[0])*2}%\t\t\t\t {len(prog[1])*2}%\t\t\t\t     {len(prog[2])*2}%",delay=0.0001)
+			input(efx.Printer('\n\n\n\n\n\n↲ Press ENTER to continue',clear=False,delay=0.0005))
 
 		elif choice in ('back','bk'):
 			break
@@ -182,7 +184,7 @@ def Leaderboard():				#Responsible for creating and updating the Leaderboard
 	if LB:
 		final=''
 		for num in range(len(LB)):
-			list=f"\n{num+1:>15}       {LB[num]['userid']:>25}     {LB[num]['g.num']:>20}\n"
+			list=f"\n{num+1:>16}       {LB[num]['userid']:>26}     {LB[num]['g.num']:>23}\n"
 			final+=list
 	else:
 		final="\n\nCannot display Leaderboard!"

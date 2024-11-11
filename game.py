@@ -6,10 +6,8 @@ man=efx.man
 
 def LoadGame():					#Loads the main game after login is successfull
 	man()
-	TPlayer=deepcopy(sides.Player)
-	wprog=TPlayer['words']
 	while True:
-		choice=input(efx.Printer("Choose Difficulty level\n\n"+efx.diffics+"\n\t  [1] CURSED\t\t\t     [2] GHOST\t\t\t         [3] PHANTOM\n\nCHOICE: ",delay=0.0005)); choice.lower()
+		choice=input(efx.Printer("Choose Difficulty level\n\n"+efx.diffics+"\n\t  [1] CURSED\t\t\t     [2] GHOST\t\t\t         [3] PHANTOM\n\nCHOICE: ",delay=0.0001)); choice.lower()
 
 		if choice in ("cursed","1"):
 			difficulty,chances,code="Cursed",10,0
@@ -18,14 +16,15 @@ def LoadGame():					#Loads the main game after login is successfull
 		elif choice in ("ghost","2"):
 			difficulty,chances,code="Ghost",8,1
 			(man).parts[:2]=["|","|"]
-			man(setup=False); break
+			man(setup=False)
+			break
 
 		elif choice in ("phantom","3"):
 			difficulty,chances,code="Phantom",5,2
 			break
 
 	efx.Printer("Opening parchment...")
-	word=data.LoadWord(code,wprog)
+	word=data.LoadWord(code,sides.Player['words'])
 
 	if word==None:
 		efx.Printer(f'Congrats! Seems like you have mastered the {difficulty.upper()} level!',pdelay=0.5)
@@ -40,15 +39,16 @@ def LoadGame():					#Loads the main game after login is successfull
 		efx.Printer(f"Word guessed! It was {word.upper()}!\n\n",clear=False,pdelay=1)
 		efx.Printer("Whew.. You managed to escape!",clear=False,pdelay=3.5)
 
-		wprog[code].append(word); TPlayer['g.num']+=1
-		data.DataAdder(TPlayer,old_user=TPlayer['userid'])
-		(sides.Player).update(TPlayer)
+		sides.Player['words'][code].append(word)
+		sides.Player['g.num']+=1
+		data.DataAdder(sides.Player,old_user=sides.Player['userid'])
 	else:
 		efx.Printer(man.hangman_display,delay=0.0005)
-		efx.Printer(f"GAME OVER!\n\nYou failed to guess the word! The word was: {word.upper()}!",clear=False,pdelay=1)
+		efx.Printer(f"GAME OVER!\n\nYou failed to guess the word!",clear=False,pdelay=1)
 		efx.Printer("\n\nThe hangman got you!",clear=False,pdelay=2)
 		efx.Printer("Hanging...")
-		efx.ClearScreen(); sleep(4)
+		efx.ClearScreen()
+		sleep(3)
 
 	Menu()
 
@@ -59,9 +59,11 @@ def GameMechanics(word,chances,difficulty):				#Handles the game's mechanics,i.e
 	while chances:
 		if wrd_display.split()==list(word): return "completed"
 
-		efx.Printer(man.hangman_display,delay=0.0005)
+		efx.ClearScreen()
+		print(man.hangman_display)
 		efx.Printer(f"\tWORD STATUS: {wrd_display}\t\t\t[{wrd_display.count('_')} letters more to guess!]",clear=False,delay=0.005)
-		guess=input(efx.Printer(f"\n\nYour Guess ({chances} left): ",clear=False)).lower(); guess=guess.strip()
+		guess=input(efx.Printer(f"\n\nYour Guess ({chances} left): ",clear=False)).lower()
+		guess=guess.strip()
 
 		if guess==word: return "completed"
 
@@ -113,7 +115,7 @@ def man_dsply(difficulty):				#Updates hangman display at each incorrect guess
 
 def Menu():				#Includes the dynamic game menu
 	while True:
-                        choice=input(efx.Printer(efx.menu%(sides.Player['userid']),delay=0.0005)); choice=(choice.lower()).strip()
+                        choice=input(efx.Printer(efx.menu%(sides.Player['userid']),delay=0.0001)); choice=(choice.lower()).strip()
 
                         if choice in ("play game",'1'):
                                 efx.Printer("Loading....")
@@ -122,7 +124,7 @@ def Menu():				#Includes the dynamic game menu
                         elif choice in ("game help",'2'):
                                 input(efx.Printer(efx.help,delay=0.0005))
 
-                        elif choice in ("view profile",'3'):
+                        elif choice in ("profile",'3'):
                                 sides.Profile()
 
                         elif choice in ("leaderboard",'4'):

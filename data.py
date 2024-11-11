@@ -1,5 +1,4 @@
 import pymysql as pms
-from efx import Printer
 
 def setup():				#Sets up the database
 	con=pms.connect(host='localhost',user='root',passwd='tiger')
@@ -8,45 +7,45 @@ def setup():				#Sets up the database
 	csr.execute('CREATE DATABASE IF NOT EXISTS PlayerData')
 	csr.execute('USE PlayerData')
 	csr.execute('''CREATE TABLE IF NOT EXISTS players(
-			  NAME char(10) NOT NULL,
-			  USERID char(10) PRIMARY KEY,
-			  PASSWD char(15) NOT NULL,
+			  NAME char(20) NOT NULL,
+			  USERID char(20) PRIMARY KEY,
+			  PASSWD char(20) NOT NULL,
 		  	  WRDS_GUESSED text,
 			  NUM_GUESSED int)''')
 
 
-def connect():				#Initializes on each execution
-	connect.con=pms.connect(host='localhost',user='root',passwd='tiger',database='PlayerData')
-	connect.csr=connect.con.cursor()
+def cnt():				#Initializes on each execution
+	cnt.con=pms.connect(host='localhost',user='root',passwd='tiger',database='PlayerData')
+	cnt.csr=cnt.con.cursor()
 
 
 def DataAdder(PData,old_user=None):				#Adds data to database
-	connect()
+	cnt()
 	if old_user==None:
 		query='INSERT INTO players VALUES("{}","{}","{}","{}",{})'.format(PData['name'],PData['userid'],PData['passwd'],PData['words'],PData['g.num'])
 	else:
 		query='UPDATE players SET name="{}", userid="{}", passwd="{}", wrds_guessed="{}", num_guessed={} WHERE userid="{}"'.format(PData['name'],PData['userid'],PData['passwd'],PData['words'],PData['g.num'],old_user)
-	connect.csr.execute(query)
-	connect.con.commit()
-	connect.con.close()
+	cnt.csr.execute(query)
+	cnt.con.commit()
+	cnt.con.close()
 
 
-def Verifier(userid,passwd):				#Verifies player credentials
-	connect()
+def Verifier(passwd):				#Verifies player credentials
+	cnt()
 
-	query='SELECT USERID, PASSWD FROM players WHERE USERID="{}" AND PASSWD="{}"'.format(userid,passwd)
+	query='SELECT PASSWD FROM players WHERE PASSWD="{}"'.format(passwd)
 
-	connect.csr.execute(query)
-	data=connect.csr.fetchone()
-	connect.con.close()
+	cnt.csr.execute(query)
+	data=cnt.csr.fetchone()
+	cnt.con.close()
 	if data: return 'verified'
 
 
 def UserVeri(userid):				#Verifies user id
-	connect()
+	cnt()
 	query='SELECT USERID FROM players WHERE userid="{}"'.format(userid)
-	connect.csr.execute(query)
-	data=connect.csr.fetchone()
+	cnt.csr.execute(query)
+	data=cnt.csr.fetchone()
 	if data==None: return ''
 	elif userid in data: return 'user exists'
 
@@ -67,12 +66,12 @@ def LoadWord(code,Glist):				#Loads the word from stored words to guess
 
 def LoadData(userid):				#Loads data from the database
 	from ast import literal_eval
-	connect()
+	cnt()
 
 	query='SELECT * FROM players WHERE userid="{}"'.format(userid)
-	connect.csr.execute(query)
-	data=connect.csr.fetchone()
-	connect.con.close()
+	cnt.csr.execute(query)
+	data=cnt.csr.fetchone()
+	cnt.con.close()
 
 	DinFormat={'name':data[0],'userid':data[1],'passwd':data[2],'words':literal_eval(data[3]),'g.num':data[4]}
 
@@ -80,16 +79,16 @@ def LoadData(userid):				#Loads data from the database
 
 
 def LBoard():
-	connect()
+	cnt()
 
 	query='''SELECT USERID, NUM_GUESSED FROM players
 		 WHERE NUM_GUESSED > 0
 		 ORDER BY NUM_GUESSED DESC
 		 LIMIT 5'''
-	connect.csr.execute(query)
+	cnt.csr.execute(query)
 	final_LB=[]
 	while True:
-		data=connect.csr.fetchone()
+		data=cnt.csr.fetchone()
 		if not data: break
 		DinFormat={'userid':data[0],'g.num':data[1]}
 		final_LB.append(DinFormat)
