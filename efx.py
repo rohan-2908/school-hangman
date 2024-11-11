@@ -2,7 +2,7 @@ import os,sys
 from time import sleep
 from sys import exit
 
-intro="""
+intro=r"""
                        _   _    _    _   _  ____ __  __    _    _   _
                       | | | |  / \  | \ | |/ ___|  \/  |  / \  | \ | |
                       | |_| | / _ \ |  \| | |  _| |\/| | / _ \ |  \| |
@@ -102,12 +102,10 @@ help="""
    Players can check and edit their profile via the PROFILE option
    in the menu.
 
-   LEADERBOARD ranks the top 5 players based on the number of words guessed,
-   with priority given to words guessed at higher difficulty levels. If
-   players are tied, they are ranked alphabetically.
+   LEADERBOARD ranks the top 5 players based on the number of words guessed.
 
    NOTE: The leaderboard WORKS ONLY IF more than 1 player is using the same
-   device and the top 5 players have guessed atleast 1 word.
+   device and the players have guessed atleast 1 word.
 
 ──────────────────────────────────────────────────────────────────────────\n\n↲ ENTER to continue"""
 
