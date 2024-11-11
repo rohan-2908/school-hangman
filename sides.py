@@ -7,7 +7,8 @@ def LoginSetup():					#Deals with login part of main program
 		choice=input(efx.Printer('Are you a new player?(Y/N) ')); choice=choice.upper()
 
 		if choice=="Y":
-			CreateAccount()
+			ret=CreateAccount()
+			if not ret: efx.Printer('Cancelling...'); continue
 			efx.Printer("Loading....")
 			input(efx.Printer(efx.lore+'\n\n\n\n\n\n↲ Press ENTER to continue!',delay=0.0005))
 			efx.Printer("Log in with your account to play.",pdelay=0.5)
@@ -16,7 +17,7 @@ def LoginSetup():					#Deals with login part of main program
 			break
 
 		elif choice=='N':
-			ExistingLogin()
+			ret=ExistingLogin()
 			break
 
 	efx.Printer('Loading...')
@@ -26,11 +27,14 @@ def CreateAccount():					#Deals with account creation
 	while True:
 		efx.Printer("""
 \t\t/ ` _ _  _ _|_ _    _  _ _ _     _ _|_
-\t\t\_,| (/_(_| | (/_  (_|(_(_(_)|_|| | |""",delay=0.0005)
+\t\t\_,| (/_(_| | (/_  (_|(_(_(_)|_|| | |\n\t\t\t\t\t\t\t\t\tGo back? Leave any field empty!""",delay=0.0005)
 		PlayerData={'words':([],[],[]),'g.num':0}
-		PlayerData['name']=input(efx.Printer("\n\nName: ",clear=False)).title()
+		PlayerData['name']=input(efx.Printer("\nName: ",clear=False)).title()
 		PlayerData['userid']=input(efx.Printer("\nCreate display name: ",clear=False)).strip()
 		PlayerData['passwd']=input(efx.Printer("\nCreate password: ",clear=False)).strip()
+
+		if any(value == '' for value in PlayerData.values()):
+			return
 
 		if '' in PlayerData.values():
 			efx.Printer("All fields are mandatory!",pdelay=0.5)
@@ -57,7 +61,7 @@ def CreateAccount():					#Deals with account creation
 			efx.Printer("No duplication found!",pdelay=0.5)
 			efx.Printer("Account created successfully!",pdelay=1)
 			data.DataAdder(PlayerData)
-			break
+			return 'success'
 		else:
 			efx.Printer(errors+'Try again I guess?',pdelay=2)
 
