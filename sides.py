@@ -27,7 +27,7 @@ def CreateAccount():					#Deals with account creation
 	while True:
 		efx.Printer("""
 \t\t/ ` _ _  _ _|_ _    _  _ _ _     _ _|_
-\t\t\_,| (/_(_| | (/_  (_|(_(_(_)|_|| | |\n\t\t\t\t\t\t\t\t\tGo back? Leave any field empty!""",delay=0.0005)
+\t\t\_,| (/_(_| | (/_  (_|(_(_(_)|_|| | |\n\t\t\t\t\t\t\t\t\tTo go back, leave any field empty""",delay=0.0005)
 		PlayerData={'words':([],[],[]),'g.num':0}
 		PlayerData['name']=input(efx.Printer("\nName: ",clear=False)).title()
 		PlayerData['userid']=input(efx.Printer("\nCreate display name: ",clear=False)).strip()
